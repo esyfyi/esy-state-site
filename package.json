@@ -1,5 +1,5 @@
 {
-  "name": "esy-state-site",
+  "name": "@esyfyi/esy-state-site",
   "version": "1.0.0",
   "description": "Esy-State website",
   "main": "index.js",
