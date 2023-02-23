@@ -3,6 +3,7 @@ name: Docker Image CI
 on:
   push:
     branches: [ "main" ]
+    paths-ignore: ".github/**"
     
 jobs:
   docker:
@@ -35,10 +36,9 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
           
-      - name: Build and push
+      - name: Build and push to Docker
         uses: docker/build-push-action@v4
         with:
           push: true
           tags: |
-            esyfyi/esy-state-site:latest
             esyfyi/esy-state-site:${{ steps.semantic_version.outputs.version_tag }}
