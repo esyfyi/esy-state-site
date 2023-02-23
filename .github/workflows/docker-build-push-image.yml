@@ -53,3 +53,4 @@ jobs:
         with:
           image: docker.io/esyfyi/esy-state-site:${{ steps.semantic_version.outputs.version_tag }}
           service: esy-state-site
+          region: europe-north1
