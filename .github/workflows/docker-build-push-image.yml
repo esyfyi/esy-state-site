@@ -41,4 +41,4 @@ jobs:
           push: true
           tags: |
             esyfyi/esy-state-site:latest
-            syfyi/esy-state-site:${{ steps.semantic_version.outputs.version_tag }}
+            esyfyi/esy-state-site:${{ steps.semantic_version.outputs.version_tag }}
