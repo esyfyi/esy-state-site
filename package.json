@@ -10,6 +10,7 @@
   "author": "Daniel Hodvogner <dhodvogner@gmail.com>",
   "license": "GNU GPLv3",
   "dependencies": {
+    "@esyfyi/esy-state": "^1.0.0",
     "express": "^4.18.2"
   }
 }

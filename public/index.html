@@ -5,10 +5,18 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Esy-State</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Welcome to Esy-State!</h1>
+  <h1 #hello-esy>Welcome to Esy-State!</h1>
   <p>Make your DOM react to changes.</p>
   <!-- fore-build: 6 -->
+  
+  <script type="module">
+    import { state } from './esy-state';
+
+    state["hello-esy"] = "Hello Esy-State!";
+
+  </script>
 </body>
 </html>
