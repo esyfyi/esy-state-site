@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Esy-State: Documentation</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="documentation-page">
+
+  <header>
+    <div class="logo">
+      <a href="./index.html">
+        <img src="./images/esy-state-logo-white-small.png" alt="esy-state logo">
+      </a>
+    </div>
+    <div class="menu">
+      <a href="./index.html" class="header-item">Home</a>
+      <a href="#" class="header-item active">Documentation</a>
+      <a href="https://github.com/esyfyi/esy-state" target="_blank" class="header-item">Github</a>
+      <!--<a href="https://github.com/esyfyi/esy-state" target="_blank" class="header-item">Slack</a>-->
+    </div>
+  </header>
+
+  <div class="documentation-container">
+    <div class="documentation-nav">
+      <h3>Contents:</h3>
+      <ul>
+        <li><a href="#explanation">Data binding? Reactive Store?</a></li>
+        <li><a href="#persistance">Persistence Feature</a></li>
+        <li><a href="#simple-one-way-data-bind"># - One-way data binding</a></li>
+        <li><a href="#simple-one-way-data-bind-html">+ - One-way data binding (HTML)</a></li>
+        <li><a href="#conditional-rendering">? - Conditional Rendering</a></li>
+        <li><a href="#list-rendering">% - List rendering</a></li>
+        <li><a href="#mutations">@ - Mutations</a></li>
+        <li><a href="#whats-next">Upcoming features</a></li>
+      </ul>
+    </div>
+
+    <div class="documentation-content">
+      <section class="documentation-section">
+        <h2 id="explanation">Data binding? Reactive Store?</h2>
+        <p>Data binding is a technique that allows you to synchronize the data between the view (usually HTML elements)
+          and
+          the model (usually a Javascript object or array) in a web application. The idea is to automatically update the
+          view when the model changes, and vice versa. This is important because it reduces the amount of code you need
+          to
+          write to keep your application in sync.</p>
+
+        <p>A reactive store is a type of data store that reacts to changes in the data it contains. In other words, it's
+          a
+          store that is designed to notify any subscribers when a change is made to its data. This is often implemented
+          using an event-driven architecture, where subscribers register to be notified when a change occurs, and the
+          store
+          broadcasts a message to all subscribers when a change is made</p>
+
+        <p>When you combine data binding with a reactive store, you get a powerful tool for building web applications.
+          With
+          this approach, you can easily bind HTML elements to the reactive store, and any changes made to the store will
+          automatically be reflected in the view. This makes it easier to create dynamic and responsive applications,
+          without having to worry about manually updating the view every time the data changes.</p>
+      </section>
+
+      <section class="documentation-section">
+        <h2 id="persistance">Persistence Feature</h2>
+        <p>The Persistence feature allows you to persist data between multiple HTML files on your website. Whenever a
+          variable in the store is changed, its value is automatically saved to local storage. This makes it possible to
+          retrieve the stored data later, even if the user navigates away from the current page or closes their browser.
+        </p>
+
+        <p>By default, all variables in the store (except for those with a prefix of "__") are persisted to local
+          storage.
+          This means that any changes made to the data will be automatically saved, and can be retrieved later.</p>
+
+        <pre>
+        <code>
+          &lt;script type=&quot;module&quot;&gt;
+            import { state } from './esy-state';
+            state[&quot;myVariable&quot;] = 'Remember me!';
+          &lt;/script&gt;
+        </code>
+      </pre>
+
+        <h3>Excluding Variables from Persistence</h3>
+
+        <p>If you need to exclude specific variables from persistence, you can add a prefix of "__" (two underscores) to
+          their names. For
+          example, if you have a variable named "myVariable", you can exclude it from persistence by renaming it to
+          "__myVariable". Variables with this prefix will not be persisted to local storage, even if their values
+          change.
+        </p>
+
+        <pre>
+      <code>
+        &lt;script type=&quot;module&quot;&gt;
+          import { state } from './esy-state';
+          state[&quot;__myVariable&quot;] = 'Don't remember me!';
+        &lt;/script&gt;
+      </code>
+    </pre>
+
+        <h3>Retrieving Persisted Data</h3>
+
+        <p>When you first load a page that uses the Persistence feature, the store will automatically retrieve any data
+          that was previously persisted to local storage. This means that any variables that were persisted will be
+          available in the store, and their values will be automatically updated in the view.</p>
+
+        <h3>Clearing Persisted Data</h3>
+
+        <p>If you need to clear all persisted data, you can call the <code class="inline">clearPersistedKeys()</code>
+          method
+          on the store.
+          This will remove all persisted data from local storage, and will also remove all variables from the store.</p>
+
+        <pre>
+    <code>
+        &lt;script type=&quot;module&quot;&gt;
+          import { state, clearPersistedKeys } from './esy-state';
+          state[&quot;foo&quot;] = 'bar';
+          clearPersistedKeys();
+        &lt;/script&gt;
+      </code>
+    </pre>
+
+
+        <h3>Caveats</h3>
+
+        <p>It's important to note that the Persistence feature uses the localStorage API, which has some limitations.
+          Specifically, the amount of data that can be stored in localStorage is limited to approximately 5-10 MB per
+          domain, depending on the browser. Additionally, data stored in localStorage is not encrypted, so sensitive
+          data
+          should not be stored using this feature.</p>
+
+        <p>Furthermore, because the Persistence feature is implemented using the localStorage API, it is subject to the
+          same
+          restrictions and limitations as that API. This means that data may not persist across different browsers or
+          devices, and that data may be lost if the user clears their browser cache or uses a browser that does not
+          support
+          localStorage.</p>
+      </section>
+
+
+
+      <section class="documentation-section">
+        <h1>Esy-state operators</h1>
+
+        <h2 id="simple-one-way-data-bind"># - Simple one-way data binding</h2>
+
+        <p>
+          Simple one-way data binding is a technique in which data flows in one direction, from a data source (e.g. a
+          JavaScript variable) to a destination (e.g. an HTML element). When the value of the data source changes, the
+          value
+          of the destination is updated to reflect the new value.
+        </p>
+
+        <p>
+          To create a one-way binding, you can use the <code class="inline">"#"</code> operator. This operator will bind
+          the
+          value of the state variable to the html element.
+        </p>
+
+        <pre>
+      <code>
+        &lt;h1 #hello-world&gt;&lt;/h1&gt;
+        &lt;script type=&quot;module&quot;&gt;
+          import { state } from './esy-state';
+          state[&quot;hello-world&quot;] = 'Hello World!';
+        &lt;/script&gt;
+      </code>
+    </pre>
+      </section>
+
+      <section class="documentation-section">
+        <h2 id="simple-one-way-data-bind-html">+ - Simple one-way data binding with arbitrary HTML</h2>
+
+        <p>
+          You can use arbitrary HTML in simple one-way data binding too by using the <code class="inline">"+"</code>
+          operator instead of the <code class="inline">"#"</code>.
+        </p>
+
+        <pre>
+      <code>
+        &lt;h1 +hello-world&gt;&lt;/h1&gt;
+        &lt;script type=&quot;module&quot;&gt;
+          import { state } from './esy-state';
+          state[&quot;hello-world&quot;] = 'Hello &lt;b&gt;World&lt;/b&gt;!';
+        &lt;/script&gt;
+      </code>
+    </pre>
+
+        <h3>⚠️ Warning!</h3>
+        <p>
+          Dynamically rendering arbitrary HTML on your website can be very dangerous because it can easily lead to XSS
+          vulnerabilities. Only use this method on trusted content and never on user-provided content.
+        </p>
+      </section>
+
+      <section class="documentation-section">
+        <h2 id="conditional-rendering">? - Conditional Rendering</h2>
+
+        <p>
+          Conditional rendering is a technique used to dynamically render HTML elements or components based on certain
+          conditions or states. It allows you to selectively show or hide elements based on the values of variables or
+          other
+          data sources.
+        </p>
+
+        <p>
+          To create a conditional rendering, you can use the <code class="inline">"?"</code> operator.
+          This operator will display the element if the value of the state variable is truthy.
+        </p>
+
+        <pre>
+      <code>
+        &lt;h1 ?visible&gt;Hello!&lt;/h1&gt;
+        &lt;script type=&quot;module&quot;&gt;
+          import { state } from './esy-state';
+          state[&quot;visible&quot;] = true;
+        &lt;/script&gt;
+      </code>
+    </pre>
+
+        <p>
+          You can also negate the use of <code class="inline">"?"</code> operator.
+          This operator will display the element if the value of the state variable is falsy.
+        </p>
+
+        <pre>
+      <code>
+        &lt;h1 ?!visible&gt;Hello!&lt;/h1&gt;
+        &lt;script type=&quot;module&quot;&gt;
+          import { state } from './esy-state';
+          state[&quot;visible&quot;] = false;
+        &lt;/script&gt;
+      </code>
+    </pre>
+      </section>
+
+      <section class="documentation-section">
+        <h2 id="list-rendering">% - List rendering</h2>
+
+        <p>
+          List rendering is a technique used to render a list of items based on an array or an object.
+        </p>
+
+        <p>
+          To create a list rendering, you can use the <code class="inline">"%"</code> operator.
+          This operator will render the element for each item in the array or object.
+          To access the items of an object you can use the mustache syntax.
+        </p>
+
+        <pre>
+      <code>
+        &lt;div %arr&gt;&lt;/div&gt;
+
+        &lt;li %people&gt;
+         &lt;div&gt;Index: {{__index}}&lt;/div&gt;
+         &lt;div&gt;Name: {{name}}&lt;/div&gt;
+         &lt;div&gt;Age: {{age}}&lt;/div&gt;
+       &lt;/li&gt;
+       
+       &lt;script type=&quot;module&quot;&gt;
+         import { state } from './esy-state';
+         state[&quot;arr&quot;] = [1, 2, 3, 4, 5];
+         state[&quot;people&quot;] = [{ name: &quot;John&quot;, age: 20 }, { name: &quot;Jane&quot;, age: 21 }];
+       &lt;/script&gt;
+      </code>
+    </pre>
+      </section>
+
+      <section class="documentation-section">
+        <h2 id="mutations">@ - Mutations (manipulating the state)</h2>
+
+        <p>
+          In order to react to user actions you need to create mutations to manipulate the state.
+        </p>
+
+        <p>
+          To bind an element's event to a mutation you can use the <code class="inline">"@"</code> operator.
+          This operator will add an event listener to the element's specified event and call the specified mutation when
+          that event is fired.
+        </p>
+
+        <pre>
+      <code>
+        Hello &lt;div #name&gt;Noname&lt;/div&gt;!
+        &lt;input type=&quot;text&quot; id=&quot;name&quot; placeholder=&quot;Enter your name..&quot;&gt;
+        &lt;button @click=&quot;setName&quot;&gt;Add&lt;/button&gt;
+
+        &lt;script type=&quot;module&quot;&gt;
+          import { state, mutations } from './esy-state';
+          mutations.setName = () =&gt; {
+            const name = document.getElementById(&quot;name&quot;).value;
+            state[&quot;name&quot;] = name;
+          };
+        &lt;/script&gt;
+      </code>
+    </pre>
+
+        <p>
+          Avoid directly manupulating arrays and object on the state.
+          Instead make sure that you always assign a new array or object to the state.
+        </p>
+
+        <pre>
+      <code>
+        &lt;script type=&quot;module&quot;&gt;
+        import { mutations } from './esy-state';
+      
+        state[&quot;arr&quot;] = [1,2,3]; 
+        mutations.addFour = () =&gt; {
+          const arr = state[&quot;arr&quot;];
+          arr.push(4);
+          state[&quot;arr&quot;] = arr;
+          // avoid: state[&quot;arr&quot;].push(4); 
+        };
+      &lt;/script&gt;
+    </code>
+    </pre>
+      </section>
+
+      <section class="documentation-section">
+        <h2 id="whats-next">Upcoming features</h2>
+
+        <ul>
+          <li>Two-way data binding</li>
+          <li>Mustache syntax support for simple one-way data binding</li>
+          <li>Style / CSS Class manipulation</li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</body>
+
+</html>

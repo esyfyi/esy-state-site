@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,16 +8,89 @@
   <title>Esy-State</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  <h1 #hello-esy>Welcome to Esy-State!</h1>
-  <p>Make your DOM react to changes.</p>
-  <!-- fore-build: 6 -->
-  
+  <header class="index-header">
+    <div class="logo">
+      <a href="#">
+        <img src="./images/esy-state-logo-white-small.png" alt="esy-state logo">
+      </a>
+    </div>
+    <div class="menu">
+      <a href="#" class="header-item active">Home</a>
+      <a href="./documentation.html" class="header-item">Documentation</a>
+      <a href="https://github.com/esyfyi/esy-state" target="_blank" class="header-item">Github</a>
+      <!--<a href="https://github.com/esyfyi/esy-state" target="_blank" class="header-item">Slack</a>-->
+    </div>
+  </header>
+
+  <section id="hero">
+    <img src="./images/esy-state-logo-big.png">
+  </section>
+
+  <section id="getting-started">
+    <h2>Make your DOM react to changes!</h2>
+    <pre>
+      <code>
+      $ npm i @esyfyi/esy-state
+    </code>
+  </pre>
+
+    <pre>
+      <code>
+        // Serv the module files staticly (With express for example) 
+        app.use('/esy-state',  express.static('node_modules/@esyfyi/esy-state', { index: ["index.mjs"] }));
+      </code>
+    </pre>
+
+    <pre>
+      <code>
+        &lt;h1 #hello-world&gt;&lt;/h1&gt;
+        &lt;script type=&quot;module&quot;&gt;
+          import { state } from './esy-state';
+          state[&quot;hello-world&quot;] = 'Hello World!';
+        &lt;/script&gt;
+      </code>
+    </pre>
+
+  </section>
+
+  <section id="intro">
+    <h2>What is esy-state?</h2>
+    <p>
+      Esy-state is a lightweight Javascript framework that makes building reactive websites easier than ever before.
+      With esy-state, users can bind HTML elements to a reactive store, meaning that any changes to the store will be
+      reflected directly in the HTML DOM. This makes it possible to create dynamic and responsive websites with just a
+      few lines of Javascript code.</p>
+
+    <p>Whether you're a seasoned developer or just starting out, [esy-state makes it easy to create websites using only
+      HTML, CSS, and Vanilla Javascript. By eliminating the need for complex build pipelines and robust frameworks, you
+      can focus on building great user experiences that are both fast and scalable.</p>
+
+    <p>So if you're looking to build high-performance websites that are easy to maintain and update, give esy-state a
+      try today!</p>
+    </p>
+  </section>
+
+  <section id="buttons">
+    <a href="./documentation.html">Documentation</button>
+      <a href="https://github.com/esyfyi/esy-state" target="_blank">GitHub</button>
+  </section>
+
   <script type="module">
     import { state } from './esy-state';
 
     state["hello-esy"] = "Hello Esy-State!";
 
+    document.addEventListener("scroll", (event) => {
+      if(window.scrollY > window.innerHeight/3.5) {
+        document.querySelector(".index-header").classList.add("scrolled");
+      } else {
+        document.querySelector(".index-header").classList.remove("scrolled");
+      }
+    });
+
   </script>
 </body>
+
 </html>
